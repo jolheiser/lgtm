@@ -177,6 +177,23 @@ func (g *Github) GetRepos(u *model.User) ([]*model.Repo, error) {
 	return repos, nil
 }
 
+func (g *Github) RemoveIssueLabels(user *model.User, repo *model.Repo, number int, labels []string) error {
+	client := setupClient(g.API, user.Token)
+	for _, label := range labels {
+		_, err := client.Issues.RemoveLabelForIssue(repo.Owner, repo.Name, number, label)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (g *Github) AddIssueLabels(user *model.User, repo *model.Repo, number int, labels []string) error {
+	client := setupClient(g.API, user.Token)
+	_, _, err := client.Issues.AddLabelsToIssue(repo.Owner, repo.Name, number, labels)
+	return err
+}
+
 func (g *Github) SetHook(user *model.User, repo *model.Repo, link string) error {
 	client := setupClient(g.API, user.Token)
 

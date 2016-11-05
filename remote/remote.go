@@ -49,6 +49,12 @@ type Remote interface {
 
 	// GetHook gets the hook from the http Request.
 	GetHook(r *http.Request) (*model.Hook, error)
+
+	// RemoveIssueLabels remove the labels of an issue
+	RemoveIssueLabels(user *model.User, repo *model.Repo, number int, labels []string) error
+
+	// AddIssueLabels add the labels to an issue
+	AddIssueLabels(user *model.User, repo *model.Repo, number int, lables []string) error
 }
 
 // GetUser authenticates a user with the remote system.
@@ -115,4 +121,13 @@ func SetStatus(c context.Context, u *model.User, r *model.Repo, num, granted, re
 // GetHook gets the hook from the http Request.
 func GetHook(c context.Context, r *http.Request) (*model.Hook, error) {
 	return FromContext(c).GetHook(r)
+}
+
+// RemoveIssueLabels remove the labels of some issue
+func RemoveIssueLabels(c context.Context, user *model.User, repo *model.Repo, number int, labels []string) error {
+	return FromContext(c).RemoveIssueLabels(user, repo, number, labels)
+}
+
+func AddIssueLabels(c context.Context, user *model.User, repo *model.Repo, number int, labels []string) error {
+	return FromContext(c).AddIssueLabels(user, repo, number, labels)
 }
