@@ -12,6 +12,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var (
+	labels = []string{"lgtm/need 2", "lgtm/need 1", "lgtm/done"}
+)
+
 func Hook(c *gin.Context) {
 	hook, err := remote.GetHook(c, c.Request)
 	if err != nil {
@@ -78,11 +82,32 @@ func Hook(c *gin.Context) {
 	}
 	approvers := getApprovers(config, maintainer, hook.Issue, comments)
 	approved := len(approvers) >= config.Approvals
+
 	err = remote.SetStatus(c, user, repo, hook.Issue.Number, len(approvers), config.Approvals)
 	if err != nil {
 		log.Errorf("Error setting status for %s pr %d. %s", repo.Slug, hook.Issue.Number, err)
 		c.String(500, "Error setting status. %s.", err)
 		return
+	}
+
+	var idx = len(approvers)
+	if idx > 2 {
+		idx = 2
+	}
+
+	var ns = make([]string, len(labels))
+	copy(ns, labels)
+
+	// remove old labels
+	err = remote.RemoveIssueLabels(c, user, repo, hook.Issue.Number, append(ns[:idx], ns[idx+1:]...))
+	if err != nil {
+		log.Errorf("Error remove old labels for %s pr %d. %s", repo.Slug, hook.Issue.Number, err)
+	}
+
+	// add new label
+	err = remote.AddIssueLabels(c, user, repo, hook.Issue.Number, []string{labels[idx]})
+	if err != nil {
+		log.Errorf("Error add new label for %s pr %d. %s", repo.Slug, hook.Issue.Number, err)
 	}
 
 	log.Debugf("processed comment for %s. received %d of %d approvals", repo.Slug, len(approvers), config.Approvals)
