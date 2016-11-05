@@ -94,8 +94,6 @@ func Hook(c *gin.Context) {
 	err = remote.RemoveIssueLabels(c, user, repo, hook.Issue.Number, labels)
 	if err != nil {
 		log.Errorf("Error remove old labels for %s pr %d. %s", repo.Slug, hook.Issue.Number, err)
-		c.String(500, "Error remove old labels. %s.", err)
-		return
 	}
 
 	var idx = len(approvers)
@@ -107,8 +105,6 @@ func Hook(c *gin.Context) {
 	err = remote.AddIssueLabels(c, user, repo, hook.Issue.Number, []string{labels[idx]})
 	if err != nil {
 		log.Errorf("Error add new label for %s pr %d. %s", repo.Slug, hook.Issue.Number, err)
-		c.String(500, "Error add new label. %s.", err)
-		return
 	}
 
 	log.Debugf("processed comment for %s. received %d of %d approvals", repo.Slug, len(approvers), config.Approvals)
