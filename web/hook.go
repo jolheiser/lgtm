@@ -1,6 +1,7 @@
 package web
 
 import (
+	"errors"
 	"regexp"
 
 	"github.com/lgtmco/lgtm/cache"
@@ -50,7 +51,11 @@ func Hook(c *gin.Context) {
 	}
 
 	// THIS IS COMPLETELY DUPLICATED IN THE API SECTION. NOT IDEAL
-	file, err := remote.GetContents(c, user, repo, "MAINTAINERS")
+	var file []byte
+	err = errors.New("MAINTAINERS file")
+	if !config.IgnoreMaintainersFile {
+		file, err = remote.GetContents(c, user, repo, "MAINTAINERS")
+	}
 	if err != nil {
 		log.Debugf("no MAINTAINERS file for %s. Checking for team members.", repo.Slug)
 		members, merr := cache.GetMembers(c, user, repo.Owner)

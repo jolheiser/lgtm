@@ -8,19 +8,21 @@ import (
 )
 
 type Config struct {
-	Approvals       int    `json:"approvals"         toml:"approvals"`
-	Pattern         string `json:"pattern"           toml:"pattern"`
-	Team            string `json:"team"              toml:"team"`
-	SelfApprovalOff bool   `json:"self_approval_off" toml:"self_approval_off"`
+	Approvals             int    `json:"approvals"         toml:"approvals"`
+	Pattern               string `json:"pattern"           toml:"pattern"`
+	Team                  string `json:"team"              toml:"team"`
+	SelfApprovalOff       bool   `json:"self_approval_off" toml:"self_approval_off"`
+	IgnoreMaintainersFile bool   `json:"ignore_maintainers_file" toml:"ignore_maintainers_file"`
 
 	re *regexp.Regexp
 }
 
 var (
-	approvals = envflag.Int("LGTM_APPROVALS", 2, "")
-	pattern = envflag.String("LGTM_PATTERN", "(?i)LGTM", "")
-	team = envflag.String("LGTM_TEAM", "MAINTAINERS", "")
-	selfApprovalOff = envflag.Bool("LGTM_SELF_APPROVAL_OFF", false, "")
+	approvals             = envflag.Int("LGTM_APPROVALS", 2, "")
+	pattern               = envflag.String("LGTM_PATTERN", "(?i)LGTM", "")
+	team                  = envflag.String("LGTM_TEAM", "MAINTAINERS", "")
+	selfApprovalOff       = envflag.Bool("LGTM_SELF_APPROVAL_OFF", false, "")
+	ignoreMaintainersFile = envflag.Bool("IGNORE_MAINTAINERS_FILE", false, "")
 )
 
 // ParseConfig parses a projects .lgtm file
@@ -46,6 +48,9 @@ func ParseConfigStr(data string) (*Config, error) {
 	}
 	if c.SelfApprovalOff == false {
 		c.SelfApprovalOff = *selfApprovalOff
+	}
+	if c.IgnoreMaintainersFile == false {
+		c.IgnoreMaintainersFile = *ignoreMaintainersFile
 	}
 
 	c.re, err = regexp.Compile(c.Pattern)
