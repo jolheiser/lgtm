@@ -3,7 +3,7 @@ package store
 import (
 	"path"
 
-	"github.com/lgtmco/lgtm/model"
+	"github.com/go-gitea/lgtm/model"
 
 	"golang.org/x/net/context"
 )

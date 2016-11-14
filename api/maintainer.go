@@ -1,11 +1,11 @@
 package api
 
 import (
-	"github.com/lgtmco/lgtm/cache"
-	"github.com/lgtmco/lgtm/model"
-	"github.com/lgtmco/lgtm/remote"
-	"github.com/lgtmco/lgtm/router/middleware/session"
-	"github.com/lgtmco/lgtm/store"
+	"github.com/go-gitea/lgtm/cache"
+	"github.com/go-gitea/lgtm/model"
+	"github.com/go-gitea/lgtm/remote"
+	"github.com/go-gitea/lgtm/router/middleware/session"
+	"github.com/go-gitea/lgtm/store"
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/gin-gonic/gin"

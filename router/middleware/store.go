@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"github.com/lgtmco/lgtm/store/datastore"
+	"github.com/go-gitea/lgtm/store/datastore"
 
 	"github.com/gin-gonic/gin"
 	"github.com/ianschenck/envflag"

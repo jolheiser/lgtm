@@ -9,8 +9,8 @@ import (
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/google/go-github/github"
-	"github.com/lgtmco/lgtm/model"
-	"github.com/lgtmco/lgtm/shared/httputil"
+	"github.com/go-gitea/lgtm/model"
+	"github.com/go-gitea/lgtm/shared/httputil"
 	"golang.org/x/oauth2"
 )
 

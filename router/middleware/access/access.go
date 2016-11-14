@@ -1,8 +1,8 @@
 package access
 
 import (
-	"github.com/lgtmco/lgtm/cache"
-	"github.com/lgtmco/lgtm/router/middleware/session"
+	"github.com/go-gitea/lgtm/cache"
+	"github.com/go-gitea/lgtm/router/middleware/session"
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/gin-gonic/gin"

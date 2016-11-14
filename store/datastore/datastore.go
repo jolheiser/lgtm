@@ -5,8 +5,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/lgtmco/lgtm/store"
-	"github.com/lgtmco/lgtm/store/migration"
+	"github.com/go-gitea/lgtm/store"
+	"github.com/go-gitea/lgtm/store/migration"
 
 	"github.com/Sirupsen/logrus"
 	_ "github.com/go-sql-driver/mysql"

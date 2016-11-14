@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/lgtmco/lgtm/model"
-	"github.com/lgtmco/lgtm/remote"
-	"github.com/lgtmco/lgtm/remote/mock"
+	"github.com/go-gitea/lgtm/model"
+	"github.com/go-gitea/lgtm/remote"
+	"github.com/go-gitea/lgtm/remote/mock"
 
 	"github.com/franela/goblin"
 	"github.com/gin-gonic/gin"

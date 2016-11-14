@@ -1,7 +1,7 @@
 package datastore
 
 import (
-	"github.com/lgtmco/lgtm/model"
+	"github.com/go-gitea/lgtm/model"
 
 	"github.com/russross/meddler"
 )

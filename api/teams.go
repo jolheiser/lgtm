@@ -1,9 +1,9 @@
 package api
 
 import (
-	"github.com/lgtmco/lgtm/cache"
-	"github.com/lgtmco/lgtm/model"
-	"github.com/lgtmco/lgtm/router/middleware/session"
+	"github.com/go-gitea/lgtm/cache"
+	"github.com/go-gitea/lgtm/model"
+	"github.com/go-gitea/lgtm/router/middleware/session"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/gin-gonic/gin"
