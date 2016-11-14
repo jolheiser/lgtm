@@ -19,7 +19,7 @@ pipeline:
     image: webhippie/golang:edge
     pull: true
     commands:
-     - make test_mysql
+     - make test-mysql
     when:
       event: push
 
@@ -27,7 +27,7 @@ pipeline:
     image: webhippie/golang:edge
     pull: true
     commands:
-     - make test_pgsql
+     - make test-pgsql
     when:
       event: push
 
