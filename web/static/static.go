@@ -1,6 +1,7 @@
 package static
 
-//go:generate go-bindata -pkg static -o static_gen.go files/...
+//go:generate go-bindata -pkg static -o bindata.go files/...
+//go:generate go fmt bindata.go
 
 import (
 	"net/http"
