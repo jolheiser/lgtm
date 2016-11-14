@@ -33,13 +33,13 @@ clean:
 
 .PHONY: generate
 generate:
-	go generate $(PACKAGES)
-
-.PHONY: deps
-deps:
 	@which go-bindata > /dev/null; if [ $$? -ne 0 ]; then \
 		go get -u github.com/jteeuwen/go-bindata/...; \
 	fi
+	@which mockery > /dev/null; if [ $$? -ne 0 ]; then \
+		go get -u github.com/vektra/mockery/...; \
+	fi
+	go generate $(PACKAGES)
 
 .PHONY: fmt
 fmt:
