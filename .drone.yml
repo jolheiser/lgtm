@@ -68,7 +68,7 @@ services:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
 
   pgsql:
-    image: postges:9.5
+    image: postgres:9.5
     environment:
       - POSTGRES_DB=test
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
