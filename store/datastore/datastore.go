@@ -14,6 +14,9 @@ import (
 	// Import the MySQL driver
 	_ "github.com/go-sql-driver/mysql"
 
+	// Import the PostgeSQL driver
+	_ "github.com/lib/pq"
+
 	// Import the SQlite3 driver
 	_ "github.com/mattn/go-sqlite3"
 )
