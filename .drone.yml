@@ -101,8 +101,12 @@ services:
     environment:
       - MYSQL_DATABASE=test
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    when:
+      event: push
 
   pgsql:
     image: postgres:9.5
     environment:
       - POSTGRES_DB=test
+    when:
+      event: push
