@@ -96,7 +96,7 @@ pipeline:
       branch: refs/tags/*
 
 services:
-  mysql:
+  mysqlsvc:
     image: mysql:5.7
     environment:
       - MYSQL_DATABASE=test
@@ -104,7 +104,7 @@ services:
     when:
       event: push
 
-  pgsql:
+  pgsqlsvc:
     image: postgres:9.5
     environment:
       - POSTGRES_DB=test
