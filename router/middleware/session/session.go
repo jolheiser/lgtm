@@ -10,6 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// User fetches the current user from the context.
 func User(c *gin.Context) *model.User {
 	v, ok := c.Get("user")
 	if !ok {
@@ -22,6 +23,7 @@ func User(c *gin.Context) *model.User {
 	return u
 }
 
+// UserMust enforces the fetch of the current user from the context.
 func UserMust(c *gin.Context) {
 	user := User(c)
 	switch {
@@ -33,6 +35,7 @@ func UserMust(c *gin.Context) {
 	}
 }
 
+// SetUser is used as a middleware to set the current user.
 func SetUser(c *gin.Context) {
 	var user *model.User
 

@@ -138,7 +138,7 @@ func TestHelper(t *testing.T) {
 }
 
 var (
-	fakeErr   = errors.New("Not Found")
+	errFake   = errors.New("Not Found")
 	fakeUser  = &model.User{Login: "octocat"}
 	fakePerm  = &model.Perm{Pull: true, Push: true, Admin: true}
 	fakeRepo  = &model.Repo{Owner: "octocat", Name: "Hello-World"}

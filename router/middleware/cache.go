@@ -13,10 +13,11 @@ var (
 	ttl = envflag.Duration("CACHE_TTL", time.Minute*15, "")
 )
 
+// Cache is a simple caching middleware.
 func Cache() gin.HandlerFunc {
-	cache_ := cache.NewTTL(*ttl)
+	cacheInstance := cache.NewTTL(*ttl)
 	return func(c *gin.Context) {
-		c.Set("cache", cache_)
+		c.Set("cache", cacheInstance)
 		c.Next()
 	}
 }

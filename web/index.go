@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Index is the handler for index pages.
 func Index(c *gin.Context) {
 	user := session.User(c)
 

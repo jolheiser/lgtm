@@ -13,6 +13,7 @@ import (
 	"github.com/go-gitea/lgtm/web/template"
 )
 
+// Load builds a handler for the server, it also defines all available routes.
 func Load(middleware ...gin.HandlerFunc) http.Handler {
 	e := gin.New()
 	e.Use(gin.Recovery())

@@ -10,8 +10,13 @@ import (
 )
 
 const (
+	// DefaultURL defines the standard remote URL.
 	DefaultURL   = "https://github.com"
+
+	// DefaultAPI defines the standard API URL
 	DefaultAPI   = "https://api.github.com/"
+
+	// DefaultScope defines the standard scope for the remote.
 	DefaultScope = "user:email,read:org,public_repo"
 )
 
@@ -22,6 +27,7 @@ var (
 	scope  = envflag.String("GITHUB_SCOPE", DefaultScope, "")
 )
 
+// Remote is a simple middleware which configures the remote authentication.
 func Remote() gin.HandlerFunc {
 	remote := &github.Github{
 		API:    DefaultAPI,

@@ -7,12 +7,15 @@ import (
 
 	"github.com/go-gitea/lgtm/store"
 	"github.com/go-gitea/lgtm/store/migration"
-
 	"github.com/Sirupsen/logrus"
-	_ "github.com/go-sql-driver/mysql"
-	_ "github.com/mattn/go-sqlite3"
 	"github.com/rubenv/sql-migrate"
 	"github.com/russross/meddler"
+
+	// Import the MySQL driver
+	_ "github.com/go-sql-driver/mysql"
+
+	// Import the SQlite3 driver
+	_ "github.com/mattn/go-sqlite3"
 )
 
 type datastore struct {

@@ -33,12 +33,12 @@ func GetMaintainer(c *gin.Context) {
 			log.Errorf("Error getting org members %s. %s", repo.Owner, merr)
 			c.String(404, "MAINTAINERS file not found. %s", err)
 			return
-		} else {
-			log.Printf("found %v members", len(members))
-			for _, member := range members {
-				file = append(file, member.Login...)
-				file = append(file, '\n')
-			}
+		}
+
+		log.Printf("found %v members", len(members))
+		for _, member := range members {
+			file = append(file, member.Login...)
+			file = append(file, '\n')
 		}
 	}
 
@@ -51,7 +51,7 @@ func GetMaintainer(c *gin.Context) {
 	c.JSON(200, maintainer)
 }
 
-// GetMaintainer gets the MAINTAINER configuration file and returns
+// GetMaintainerOrg gets the MAINTAINER configuration file and returns
 // a subset of the file with members belonging to the specified organization.
 func GetMaintainerOrg(c *gin.Context) {
 	var (

@@ -40,9 +40,9 @@ func GetRepos(c *gin.Context) {
 	// merges the slice of active and remote repositories favoring
 	// and swapping in local repository information when possible.
 	for i, repo := range repoc {
-		repo_, ok := repom[repo.Slug]
+		currRepo, ok := repom[repo.Slug]
 		if ok {
-			repoc[i] = repo_
+			repoc[i] = currRepo
 		}
 	}
 	c.JSON(200, repoc)

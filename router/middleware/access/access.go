@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// RepoAdmin is a middleware to check if the current user is an admin.
 func RepoAdmin(c *gin.Context) {
 	var (
 		owner = c.Param("owner")
@@ -32,6 +33,7 @@ func RepoAdmin(c *gin.Context) {
 	c.Next()
 }
 
+// RepoPull is a middleware to check if the user is allowed to pull from the repo.
 func RepoPull(c *gin.Context) {
 	var (
 		owner = c.Param("owner")

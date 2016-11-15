@@ -7,6 +7,7 @@ import (
 	"github.com/ianschenck/envflag"
 )
 
+// Config represents a repo-specific configuration file.
 type Config struct {
 	Approvals             int    `json:"approvals"         toml:"approvals"`
 	Pattern               string `json:"pattern"           toml:"pattern"`

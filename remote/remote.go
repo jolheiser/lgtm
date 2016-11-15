@@ -9,6 +9,7 @@ import (
 	"golang.org/x/net/context"
 )
 
+// Remote represents a general interface for remote communications.
 type Remote interface {
 	// GetUser authenticates a user with the remote system.
 	GetUser(http.ResponseWriter, *http.Request) (*model.User, error)
@@ -123,11 +124,12 @@ func GetHook(c context.Context, r *http.Request) (*model.Hook, error) {
 	return FromContext(c).GetHook(r)
 }
 
-// RemoveIssueLabels remove the labels of some issue
+// RemoveIssueLabels remove the labels of some issue.
 func RemoveIssueLabels(c context.Context, user *model.User, repo *model.Repo, number int, labels []string) error {
 	return FromContext(c).RemoveIssueLabels(user, repo, number, labels)
 }
 
+// AddIssueLabels writes labels for the requirements of reviews.
 func AddIssueLabels(c context.Context, user *model.User, repo *model.Repo, number int, labels []string) error {
 	return FromContext(c).AddIssueLabels(user, repo, number, labels)
 }

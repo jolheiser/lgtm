@@ -1,5 +1,6 @@
 package github
 
+// Error represents an API error.
 type Error struct {
 	Message string `json:"message"`
 }
@@ -7,6 +8,7 @@ type Error struct {
 func (e Error) Error() string  { return e.Message }
 func (e Error) String() string { return e.Message }
 
+// Branch represents a branch, including protection.
 type Branch struct {
 	Protection struct {
 		Enabled bool `json:"enabled"`

@@ -17,6 +17,7 @@ var (
 	labels = []string{"lgtm/need 2", "lgtm/need 1", "lgtm/done"}
 )
 
+// Hook is the handler for hook pages.
 func Hook(c *gin.Context) {
 	hook, err := remote.GetHook(c, c.Request)
 	if err != nil {
@@ -64,11 +65,11 @@ func Hook(c *gin.Context) {
 			log.Errorf("Error getting org members %s. %s", repo.Owner, merr)
 			c.String(404, "MAINTAINERS file not found. %s", err)
 			return
-		} else {
-			for _, member := range members {
-				file = append(file, member.Login...)
-				file = append(file, '\n')
-			}
+		}
+
+		for _, member := range members {
+			file = append(file, member.Login...)
+			file = append(file, '\n')
 		}
 	}
 

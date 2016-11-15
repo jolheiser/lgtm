@@ -17,6 +17,7 @@ import (
 // name of the status message posted to GitHub
 const context = "approvals/lgtm"
 
+// Github provides the available configuration values.
 type Github struct {
 	URL    string
 	API    string
@@ -25,6 +26,7 @@ type Github struct {
 	Scopes []string
 }
 
+// GetUser retrieves the current user from the API.
 func (g *Github) GetUser(res http.ResponseWriter, req *http.Request) (*model.User, error) {
 
 	var config = &oauth2.Config{
@@ -67,6 +69,7 @@ func (g *Github) GetUser(res http.ResponseWriter, req *http.Request) (*model.Use
 	}, nil
 }
 
+// GetUserToken retrieves a user token from the API.
 func (g *Github) GetUserToken(token string) (string, error) {
 	client := setupClient(g.API, token)
 	user, _, err := client.Users.Get("")
@@ -76,6 +79,7 @@ func (g *Github) GetUserToken(token string) (string, error) {
 	return *user.Login, nil
 }
 
+// GetTeams retrieves teams from the API.
 func (g *Github) GetTeams(user *model.User) ([]*model.Team, error) {
 	client := setupClient(g.API, user.Token)
 	orgs, _, err := client.Organizations.List("", &github.ListOptions{PerPage: 100})
@@ -93,6 +97,7 @@ func (g *Github) GetTeams(user *model.User) ([]*model.Team, error) {
 	return teams, nil
 }
 
+// GetMembers retrieves members from the API.
 func (g *Github) GetMembers(user *model.User, team string) ([]*model.Member, error) {
 	client := setupClient(g.API, user.Token)
 	teams, _, err := client.Organizations.ListTeams(team, &github.ListOptions{PerPage: 100})
@@ -124,21 +129,23 @@ func (g *Github) GetMembers(user *model.User, team string) ([]*model.Member, err
 	return members, nil
 }
 
+// GetRepo retrieves a repository from the API.
 func (g *Github) GetRepo(user *model.User, owner, name string) (*model.Repo, error) {
 	client := setupClient(g.API, user.Token)
-	repo_, _, err := client.Repositories.Get(owner, name)
+	currentRepo, _, err := client.Repositories.Get(owner, name)
 	if err != nil {
 		return nil, fmt.Errorf("Error fetching repository. %s", err)
 	}
 	return &model.Repo{
 		Owner:   owner,
 		Name:    name,
-		Slug:    *repo_.FullName,
-		Link:    *repo_.HTMLURL,
-		Private: *repo_.Private,
+		Slug:    *currentRepo.FullName,
+		Link:    *currentRepo.HTMLURL,
+		Private: *currentRepo.Private,
 	}, nil
 }
 
+// GetPerm retrieves permissions from the API.
 func (g *Github) GetPerm(user *model.User, owner, name string) (*model.Perm, error) {
 	client := setupClient(g.API, user.Token)
 	repo, _, err := client.Repositories.Get(owner, name)
@@ -152,6 +159,7 @@ func (g *Github) GetPerm(user *model.User, owner, name string) (*model.Perm, err
 	return m, nil
 }
 
+// GetRepos retrieves repositories from the API.
 func (g *Github) GetRepos(u *model.User) ([]*model.Repo, error) {
 	client := setupClient(g.API, u.Token)
 	all, err := GetUserRepos(client)
@@ -177,6 +185,7 @@ func (g *Github) GetRepos(u *model.User) ([]*model.Repo, error) {
 	return repos, nil
 }
 
+// RemoveIssueLabels removes labels from an issue.
 func (g *Github) RemoveIssueLabels(user *model.User, repo *model.Repo, number int, labels []string) error {
 	client := setupClient(g.API, user.Token)
 	for _, label := range labels {
@@ -188,16 +197,18 @@ func (g *Github) RemoveIssueLabels(user *model.User, repo *model.Repo, number in
 	return nil
 }
 
+// AddIssueLabels adds labels to an issue.
 func (g *Github) AddIssueLabels(user *model.User, repo *model.Repo, number int, labels []string) error {
 	client := setupClient(g.API, user.Token)
 	_, _, err := client.Issues.AddLabelsToIssue(repo.Owner, repo.Name, number, labels)
 	return err
 }
 
+// SetHook injects a webhook through the API.
 func (g *Github) SetHook(user *model.User, repo *model.Repo, link string) error {
 	client := setupClient(g.API, user.Token)
 
-	repo_, _, err := client.Repositories.Get(repo.Owner, repo.Name)
+	currentRepo, _, err := client.Repositories.Get(repo.Owner, repo.Name)
 	if err != nil {
 		return err
 	}
@@ -218,17 +229,18 @@ func (g *Github) SetHook(user *model.User, repo *model.Repo, link string) error 
 	in.Protection.Checks.Enforcement = "non_admins"
 	in.Protection.Checks.Contexts = []string{context}
 
-	client_ := NewClientToken(g.API, user.Token)
-	err = client_.BranchProtect(repo.Owner, repo.Name, *repo_.DefaultBranch, in)
+	currentClient := NewClientToken(g.API, user.Token)
+	err = currentClient.BranchProtect(repo.Owner, repo.Name, *currentRepo.DefaultBranch, in)
 	if err != nil {
 		if g.URL == "https://github.com" {
 			return err
 		}
-		log.Warnf("Error configuring protected branch for %s/%s@%s. %s", repo.Owner, repo.Name, *repo_.DefaultBranch, err)
+		log.Warnf("Error configuring protected branch for %s/%s@%s. %s", repo.Owner, repo.Name, *currentRepo.DefaultBranch, err)
 	}
 	return nil
 }
 
+// DelHook removes a webhook through the API.
 func (g *Github) DelHook(user *model.User, repo *model.Repo, link string) error {
 	client := setupClient(g.API, user.Token)
 
@@ -243,13 +255,13 @@ func (g *Github) DelHook(user *model.User, repo *model.Repo, link string) error 
 		return err
 	}
 
-	repo_, _, err := client.Repositories.Get(repo.Owner, repo.Name)
+	currentRepo, _, err := client.Repositories.Get(repo.Owner, repo.Name)
 	if err != nil {
 		return err
 	}
 
-	client_ := NewClientToken(g.API, user.Token)
-	branch, _ := client_.Branch(repo.Owner, repo.Name, *repo_.DefaultBranch)
+	currentClient := NewClientToken(g.API, user.Token)
+	branch, _ := currentClient.Branch(repo.Owner, repo.Name, *currentRepo.DefaultBranch)
 	if len(branch.Protection.Checks.Contexts) == 0 {
 		return nil
 	}
@@ -260,20 +272,21 @@ func (g *Github) DelHook(user *model.User, repo *model.Repo, link string) error 
 		}
 	}
 	branch.Protection.Checks.Contexts = checks
-	return client_.BranchProtect(repo.Owner, repo.Name, *repo_.DefaultBranch, branch)
+	return currentClient.BranchProtect(repo.Owner, repo.Name, *currentRepo.DefaultBranch, branch)
 }
 
+// GetComments retrieves comments from the API.
 func (g *Github) GetComments(u *model.User, r *model.Repo, num int) ([]*model.Comment, error) {
 	client := setupClient(g.API, u.Token)
 
 	opts := github.IssueListCommentsOptions{Direction: "desc", Sort: "created"}
 	opts.PerPage = 100
-	comments_, _, err := client.Issues.ListComments(r.Owner, r.Name, num, &opts)
+	apiComments, _, err := client.Issues.ListComments(r.Owner, r.Name, num, &opts)
 	if err != nil {
 		return nil, err
 	}
 	comments := []*model.Comment{}
-	for _, comment := range comments_ {
+	for _, comment := range apiComments {
 		comments = append(comments, &model.Comment{
 			Author: *comment.User.Login,
 			Body:   *comment.Body,
@@ -282,6 +295,7 @@ func (g *Github) GetComments(u *model.User, r *model.Repo, num int) ([]*model.Co
 	return comments, nil
 }
 
+// GetContents retrieves a file from the API.
 func (g *Github) GetContents(u *model.User, r *model.Repo, path string) ([]byte, error) {
 	client := setupClient(g.API, u.Token)
 	content, _, _, err := client.Repositories.GetContents(r.Owner, r.Name, path, nil)
@@ -291,6 +305,7 @@ func (g *Github) GetContents(u *model.User, r *model.Repo, path string) ([]byte,
 	return content.Decode()
 }
 
+// SetStatus sets the pull request status through the API.
 func (g *Github) SetStatus(u *model.User, r *model.Repo, num, granted, required int) error {
 	client := setupClient(g.API, u.Token)
 
@@ -317,6 +332,7 @@ func (g *Github) SetStatus(u *model.User, r *model.Repo, num, granted, required 
 	return err
 }
 
+// GetHook gets a webhook from the API.
 func (g *Github) GetHook(r *http.Request) (*model.Hook, error) {
 
 	// only process comment hooks
