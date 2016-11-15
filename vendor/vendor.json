@@ -88,6 +88,18 @@
 			"revisionTime": "2014-09-12T11:56:02+03:00"
 		},
 		{
+			"checksumSHA1": "avqi4lkviHdrNJ92cXCwrw9x870=",
+			"path": "github.com/lib/pq",
+			"revision": "d8eeeb8bae8896dd8e1b7e514ab0d396c4f12a1b",
+			"revisionTime": "2016-11-03T02:43:54Z"
+		},
+		{
+			"checksumSHA1": "xppHi82MLqVx1eyQmbhTesAEjx8=",
+			"path": "github.com/lib/pq/oid",
+			"revision": "d8eeeb8bae8896dd8e1b7e514ab0d396c4f12a1b",
+			"revisionTime": "2016-11-03T02:43:54Z"
+		},
+		{
 			"path": "github.com/manucorporat/sse",
 			"revision": "fe6ea2c8e398672518ef204bf0fbd9af858d0e15",
 			"revisionTime": "2015-07-15T20:48:05+02:00"
@@ -153,6 +165,48 @@
 			"revisionTime": "2015-11-16T13:49:40-08:00"
 		},
 		{
+			"checksumSHA1": "4lEP/dEWOMb4r2Aehu0D9iBDgIU=",
+			"path": "google.golang.org/appengine/internal",
+			"revision": "78199dcb0669fc381c22e919e1e97eba879e8f60",
+			"revisionTime": "2016-09-14T03:40:34Z"
+		},
+		{
+			"checksumSHA1": "TsNO8P0xUlLNyh3Ic/tzSp/fDWM=",
+			"path": "google.golang.org/appengine/internal/base",
+			"revision": "78199dcb0669fc381c22e919e1e97eba879e8f60",
+			"revisionTime": "2016-09-14T03:40:34Z"
+		},
+		{
+			"checksumSHA1": "5QsV5oLGSfKZqTCVXP6NRz5T4Tw=",
+			"path": "google.golang.org/appengine/internal/datastore",
+			"revision": "78199dcb0669fc381c22e919e1e97eba879e8f60",
+			"revisionTime": "2016-09-14T03:40:34Z"
+		},
+		{
+			"checksumSHA1": "Gep2T9zmVYV8qZfK2gu3zrmG6QE=",
+			"path": "google.golang.org/appengine/internal/log",
+			"revision": "78199dcb0669fc381c22e919e1e97eba879e8f60",
+			"revisionTime": "2016-09-14T03:40:34Z"
+		},
+		{
+			"checksumSHA1": "a1XY7rz3BieOVqVI2Et6rKiwQCk=",
+			"path": "google.golang.org/appengine/internal/remote_api",
+			"revision": "78199dcb0669fc381c22e919e1e97eba879e8f60",
+			"revisionTime": "2016-09-14T03:40:34Z"
+		},
+		{
+			"checksumSHA1": "QtAbHtHmDzcf6vOV9eqlCpKgjiw=",
+			"path": "google.golang.org/appengine/internal/urlfetch",
+			"revision": "78199dcb0669fc381c22e919e1e97eba879e8f60",
+			"revisionTime": "2016-09-14T03:40:34Z"
+		},
+		{
+			"checksumSHA1": "akOV9pYnCbcPA8wJUutSQVibdyg=",
+			"path": "google.golang.org/appengine/urlfetch",
+			"revision": "78199dcb0669fc381c22e919e1e97eba879e8f60",
+			"revisionTime": "2016-09-14T03:40:34Z"
+		},
+		{
 			"path": "gopkg.in/bluesuncorp/validator.v5",
 			"revision": "d5acf1dac43705f8bfbb71d878e290e2bed3950b",
 			"revisionTime": "2015-09-24T07:44:28-04:00"
@@ -172,5 +226,6 @@
 			"revision": "a83829b6f1293c91addabc89d0571c246397bbf4",
 			"revisionTime": "2016-03-01T17:40:22-03:00"
 		}
-	]
+	],
+	"rootPath": "github.com/go-gitea/lgtm"
 }

@@ -5,14 +5,20 @@ import (
 	"os"
 	"time"
 
-	"github.com/lgtmco/lgtm/store"
-	"github.com/lgtmco/lgtm/store/migration"
-
+	"github.com/go-gitea/lgtm/store"
+	"github.com/go-gitea/lgtm/store/migration"
 	"github.com/Sirupsen/logrus"
-	_ "github.com/go-sql-driver/mysql"
-	_ "github.com/mattn/go-sqlite3"
 	"github.com/rubenv/sql-migrate"
 	"github.com/russross/meddler"
+
+	// Import the MySQL driver
+	_ "github.com/go-sql-driver/mysql"
+
+	// Import the PostgeSQL driver
+	_ "github.com/lib/pq"
+
+	// Import the SQlite3 driver
+	_ "github.com/mattn/go-sqlite3"
 )
 
 type datastore struct {
@@ -111,5 +117,7 @@ func setupMeddler(driver string) {
 		meddler.Default = meddler.SQLite
 	case "mysql":
 		meddler.Default = meddler.MySQL
+	case "postgres":
+		meddler.Default = meddler.PostgreSQL
 	}
 }

@@ -1,13 +1,14 @@
 package access
 
 import (
-	"github.com/lgtmco/lgtm/cache"
-	"github.com/lgtmco/lgtm/router/middleware/session"
+	"github.com/go-gitea/lgtm/cache"
+	"github.com/go-gitea/lgtm/router/middleware/session"
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/gin-gonic/gin"
 )
 
+// RepoAdmin is a middleware to check if the current user is an admin.
 func RepoAdmin(c *gin.Context) {
 	var (
 		owner = c.Param("owner")
@@ -32,6 +33,7 @@ func RepoAdmin(c *gin.Context) {
 	c.Next()
 }
 
+// RepoPull is a middleware to check if the user is allowed to pull from the repo.
 func RepoPull(c *gin.Context) {
 	var (
 		owner = c.Param("owner")

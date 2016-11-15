@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/franela/goblin"
-	"github.com/lgtmco/lgtm/model"
+	"github.com/go-gitea/lgtm/model"
 )
 
 func Test_repostore(t *testing.T) {

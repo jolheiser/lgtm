@@ -4,10 +4,10 @@ import (
 	"errors"
 	"regexp"
 
-	"github.com/lgtmco/lgtm/cache"
-	"github.com/lgtmco/lgtm/model"
-	"github.com/lgtmco/lgtm/remote"
-	"github.com/lgtmco/lgtm/store"
+	"github.com/go-gitea/lgtm/cache"
+	"github.com/go-gitea/lgtm/model"
+	"github.com/go-gitea/lgtm/remote"
+	"github.com/go-gitea/lgtm/store"
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/gin-gonic/gin"
@@ -17,6 +17,7 @@ var (
 	labels = []string{"lgtm/need 2", "lgtm/need 1", "lgtm/done"}
 )
 
+// Hook is the handler for hook pages.
 func Hook(c *gin.Context) {
 	hook, err := remote.GetHook(c, c.Request)
 	if err != nil {
@@ -64,11 +65,11 @@ func Hook(c *gin.Context) {
 			log.Errorf("Error getting org members %s. %s", repo.Owner, merr)
 			c.String(404, "MAINTAINERS file not found. %s", err)
 			return
-		} else {
-			for _, member := range members {
-				file = append(file, member.Login...)
-				file = append(file, '\n')
-			}
+		}
+
+		for _, member := range members {
+			file = append(file, member.Login...)
+			file = append(file, '\n')
 		}
 	}
 

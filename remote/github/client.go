@@ -21,6 +21,7 @@ const (
 	pathBranch = "%srepos/%s/%s/branches/%s"
 )
 
+// Client represents the simple HTTP client for the GitHub API.
 type Client struct {
 	client *http.Client
 	base   string // base url
@@ -46,6 +47,7 @@ func (c *Client) SetClient(client *http.Client) {
 	c.client = client
 }
 
+// Branch retrives informations about a branch from the GitHub API.
 func (c *Client) Branch(owner, name, branch string) (*Branch, error) {
 	out := new(Branch)
 	uri := fmt.Sprintf(pathBranch, c.base, owner, name, branch)
@@ -53,6 +55,7 @@ func (c *Client) Branch(owner, name, branch string) (*Branch, error) {
 	return out, err
 }
 
+// BranchProtect enables the branch protection for a specific branch.
 func (c *Client) BranchProtect(owner, name, branch string, in *Branch) error {
 	uri := fmt.Sprintf(pathBranch, c.base, owner, name, branch)
 	return c.patch(uri, in, nil)

@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/lgtmco/lgtm/model"
-	"github.com/lgtmco/lgtm/remote"
-	"github.com/lgtmco/lgtm/remote/mock"
+	"github.com/go-gitea/lgtm/model"
+	"github.com/go-gitea/lgtm/remote"
+	"github.com/go-gitea/lgtm/remote/mock"
 
 	"github.com/franela/goblin"
 	"github.com/gin-gonic/gin"
@@ -20,13 +20,13 @@ func TestHelper(t *testing.T) {
 	g.Describe("Cache helpers", func() {
 
 		var c *gin.Context
-		var r *mock.Remote
+		var r *mocks.Remote
 
 		g.BeforeEach(func() {
 			c = new(gin.Context)
 			ToContext(c, Default())
 
-			r = new(mock.Remote)
+			r = new(mocks.Remote)
 			remote.ToContext(c, r)
 		})
 
@@ -45,17 +45,17 @@ func TestHelper(t *testing.T) {
 			)
 
 			Set(c, key, fakePerm)
-			r.On("GetPerm", fakeUser, fakeRepo.Owner, fakeRepo.Name).Return(nil, fakeErr).Once()
+			r.On("GetPerm", fakeUser, fakeRepo.Owner, fakeRepo.Name).Return(nil, errFake).Once()
 			p, err := GetPerm(c, fakeUser, fakeRepo.Owner, fakeRepo.Name)
 			g.Assert(p).Equal(fakePerm)
 			g.Assert(err).Equal(nil)
 		})
 
 		g.It("Should get permissions error", func() {
-			r.On("GetPerm", fakeUser, fakeRepo.Owner, fakeRepo.Name).Return(nil, fakeErr).Once()
+			r.On("GetPerm", fakeUser, fakeRepo.Owner, fakeRepo.Name).Return(nil, errFake).Once()
 			p, err := GetPerm(c, fakeUser, fakeRepo.Owner, fakeRepo.Name)
 			g.Assert(p == nil).IsTrue()
-			g.Assert(err).Equal(fakeErr)
+			g.Assert(err).Equal(errFake)
 		})
 
 		g.It("Should set and get repos", func() {
@@ -72,17 +72,17 @@ func TestHelper(t *testing.T) {
 			)
 
 			Set(c, key, fakeRepos)
-			r.On("GetRepos", fakeUser).Return(nil, fakeErr).Once()
+			r.On("GetRepos", fakeUser).Return(nil, errFake).Once()
 			p, err := GetRepos(c, fakeUser)
 			g.Assert(p).Equal(fakeRepos)
 			g.Assert(err).Equal(nil)
 		})
 
 		g.It("Should get repos error", func() {
-			r.On("GetRepos", fakeUser).Return(nil, fakeErr).Once()
+			r.On("GetRepos", fakeUser).Return(nil, errFake).Once()
 			p, err := GetRepos(c, fakeUser)
 			g.Assert(p == nil).IsTrue()
-			g.Assert(err).Equal(fakeErr)
+			g.Assert(err).Equal(errFake)
 		})
 
 		g.It("Should set and get teams", func() {
@@ -98,17 +98,17 @@ func TestHelper(t *testing.T) {
 			)
 
 			Set(c, key, fakeTeams)
-			r.On("GetTeams", fakeUser).Return(nil, fakeErr).Once()
+			r.On("GetTeams", fakeUser).Return(nil, errFake).Once()
 			p, err := GetTeams(c, fakeUser)
 			g.Assert(p).Equal(fakeTeams)
 			g.Assert(err).Equal(nil)
 		})
 
 		g.It("Should get team error", func() {
-			r.On("GetTeams", fakeUser).Return(nil, fakeErr).Once()
+			r.On("GetTeams", fakeUser).Return(nil, errFake).Once()
 			p, err := GetTeams(c, fakeUser)
 			g.Assert(p == nil).IsTrue()
-			g.Assert(err).Equal(fakeErr)
+			g.Assert(err).Equal(errFake)
 		})
 
 		g.It("Should set and get members", func() {
@@ -122,23 +122,23 @@ func TestHelper(t *testing.T) {
 			key := "members:drone"
 
 			Set(c, key, fakeMembers)
-			r.On("GetMembers", fakeUser, "drone").Return(nil, fakeErr).Once()
+			r.On("GetMembers", fakeUser, "drone").Return(nil, errFake).Once()
 			p, err := GetMembers(c, fakeUser, "drone")
 			g.Assert(p).Equal(fakeMembers)
 			g.Assert(err).Equal(nil)
 		})
 
 		g.It("Should get member error", func() {
-			r.On("GetMembers", fakeUser, "drone").Return(nil, fakeErr).Once()
+			r.On("GetMembers", fakeUser, "drone").Return(nil, errFake).Once()
 			p, err := GetMembers(c, fakeUser, "drone")
 			g.Assert(p == nil).IsTrue()
-			g.Assert(err).Equal(fakeErr)
+			g.Assert(err).Equal(errFake)
 		})
 	})
 }
 
 var (
-	fakeErr   = errors.New("Not Found")
+	errFake   = errors.New("Not Found")
 	fakeUser  = &model.User{Login: "octocat"}
 	fakePerm  = &model.Perm{Pull: true, Push: true, Admin: true}
 	fakeRepo  = &model.Repo{Owner: "octocat", Name: "Hello-World"}

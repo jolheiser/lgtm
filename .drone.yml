@@ -1,33 +1,112 @@
 workspace:
-  base: /go
-  path: src/github.com/lgtmco/lgtm
+  base: /srv/app
+  path: src/github.com/go-gitea/lgtm
 
 pipeline:
   test:
-    image: golang:1.6
+    image: webhippie/golang:edge
+    pull: true
+    environment:
+      CGO_ENABLED: 1
     commands:
-      - make deps
-      - make gen_assets gen_migration
+      - make clean
+      - make vet
+      - make lint
       - make test
+      - make build
 
-  build:
-    image: golang:1.6
+  mysql:
+    image: webhippie/golang:edge
+    pull: true
     commands:
-     - make test_mysql
-     - make build
+     - make test-mysql
     when:
       event: push
 
-  docker:
-    repo: lgtm/lgtm
-    tag: [latest, 1.0.0]
+  pgsql:
+    image: webhippie/golang:edge
+    pull: true
+    commands:
+     - make test-pgsql
     when:
-      branch: master
       event: push
+
+  updater:
+    image: karalabe/xgo-latest:latest
+    pull: true
+    commands:
+      - make publish
+    when:
+      event: [ push, tag ]
+      branch: [ master, refs/tags/* ]
+
+  coverage:
+    image: plugins/coverage
+    server: https://coverage.gitea.io
+
+  docker1:
+    image: plugins/docker
+    repo: gitea/lgtm
+    tags: [ '${TAG}' ]
+    when:
+      event: tag
+      branch: refs/tags/*
+
+  docker2:
+    image: plugins/docker
+    repo: gitea/lgtm
+    tags: [ 'latest' ]
+    when:
+      event: push
+      branch: master
+
+  release1:
+    image: plugins/s3
+    path_style: true
+    source: dist/release/
+    target: /lgtm/master
+    when:
+      event: push
+      branch: master
+
+  release2:
+    image: plugins/s3
+    path_style: true
+    source: dist/release/
+    target: /lgtm/$$TAG
+    when:
+      event: tag
+      branch: refs/tags/*
+
+  release3:
+    image: plugins/s3
+    path_style: true
+    source: dist/latest/
+    target: /lgtm/latest
+    when:
+      event: tag
+      branch: refs/tags/*
+
+  github:
+    image: plugins/github-release
+    files:
+      - dist/release/*
+    when:
+      event: tag
+      branch: refs/tags/*
 
 services:
-  mysql:
-    image: mysql:5.6.27
+  mysqlsvc:
+    image: mysql:5.7
     environment:
       - MYSQL_DATABASE=test
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    when:
+      event: push
+
+  pgsqlsvc:
+    image: postgres:9.5
+    environment:
+      - POSTGRES_DB=test
+    when:
+      event: push

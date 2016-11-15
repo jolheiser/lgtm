@@ -1,5 +1,6 @@
 package model
 
+// User represents an user from the the remote API.
 type User struct {
 	ID     int64  `json:"id"      meddler:"user_id,pk"`
 	Login  string `json:"login"   meddler:"user_login"`

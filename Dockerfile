@@ -1,17 +1,18 @@
-# Build the drone executable on a x64 Linux host:
-#
-#     go build --ldflags '-extldflags "-static"' -o lgtm
-#
-# Build the docker image:
-#
-#     docker build --rm=true -t lgtm/lgtm .
-
-FROM centurylink/ca-certs
+FROM alpine:edge
 EXPOSE 8000
+
+RUN apk update && \
+  apk add \
+    ca-certificates \
+    sqlite && \
+  rm -rf \
+    /var/cache/apk/*
 
 ENV DATABASE_DRIVER=sqlite3
 ENV DATABASE_DATASOURCE=/var/lib/lgtm/lgtm.sqlite
 ENV GODEBUG=netdns=go
 
-ADD lgtm /lgtm
-ENTRYPOINT ["/lgtm"]
+ENTRYPOINT ["/usr/bin/lgtm"]
+CMD ["server"]
+
+ADD bin/lgtm /usr/bin/

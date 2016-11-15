@@ -4,15 +4,16 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/lgtmco/lgtm/api"
-	"github.com/lgtmco/lgtm/router/middleware/access"
-	"github.com/lgtmco/lgtm/router/middleware/header"
-	"github.com/lgtmco/lgtm/router/middleware/session"
-	"github.com/lgtmco/lgtm/web"
-	"github.com/lgtmco/lgtm/web/static"
-	"github.com/lgtmco/lgtm/web/template"
+	"github.com/go-gitea/lgtm/api"
+	"github.com/go-gitea/lgtm/router/middleware/access"
+	"github.com/go-gitea/lgtm/router/middleware/header"
+	"github.com/go-gitea/lgtm/router/middleware/session"
+	"github.com/go-gitea/lgtm/web"
+	"github.com/go-gitea/lgtm/web/static"
+	"github.com/go-gitea/lgtm/web/template"
 )
 
+// Load builds a handler for the server, it also defines all available routes.
 func Load(middleware ...gin.HandlerFunc) http.Handler {
 	e := gin.New()
 	e.Use(gin.Recovery())

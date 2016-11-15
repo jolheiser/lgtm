@@ -87,7 +87,7 @@ func parseMaintainerToml(data string) (*Maintainer, error) {
 		return nil, err
 	}
 	if m.People == nil {
-		return nil, fmt.Errorf("Invalid Toml format. Missing people section.")
+		return nil, fmt.Errorf("Invalid TOML format, missing people section")
 	}
 	// if the person is defined in the file, but the Login field is
 	// empty, we can use the map key as the Login value. This is mainly
@@ -125,7 +125,7 @@ func parseMaintainerText(data string) (*Maintainer, error) {
 			person = parseLoginEmail(item)
 		}
 		if person == nil {
-			return nil, fmt.Errorf("Invalid file format.")
+			return nil, fmt.Errorf("Invalid file format")
 		}
 
 		m.People[person.Login] = person

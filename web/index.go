@@ -1,13 +1,14 @@
 package web
 
 import (
-	"github.com/lgtmco/lgtm/cache"
-	"github.com/lgtmco/lgtm/router/middleware/session"
-	"github.com/lgtmco/lgtm/shared/token"
+	"github.com/go-gitea/lgtm/cache"
+	"github.com/go-gitea/lgtm/router/middleware/session"
+	"github.com/go-gitea/lgtm/shared/token"
 
 	"github.com/gin-gonic/gin"
 )
 
+// Index is the handler for index pages.
 func Index(c *gin.Context) {
 	user := session.User(c)
 

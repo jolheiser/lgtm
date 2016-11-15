@@ -1,6 +1,9 @@
 package template
 
-//go:generate go-bindata -pkg template -o template_gen.go files/
+//go:generate go-bindata -pkg template -o bindata.go files/
+//go:generate go fmt bindata.go
+//go:generate sed -i.bak "s/Html/HTML/" bindata.go
+//go:generate rm bindata.go.bak
 
 import (
 	"encoding/json"
@@ -8,6 +11,7 @@ import (
 	"path/filepath"
 )
 
+// Template is a template handler for the used templates.
 func Template() *template.Template {
 	funcs := map[string]interface{}{
 		"json": marshal,

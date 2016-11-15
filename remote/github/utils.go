@@ -17,7 +17,7 @@ func setupClient(rawurl, accessToken string) *github.Client {
 	return github
 }
 
-// GetHook is a heper function that retrieves a hook by
+// GetHook is a helper function that retrieves a hook by
 // hostname. To do this, it will retrieve a list of all hooks
 // and iterate through the list.
 func GetHook(client *github.Client, owner, name, rawurl string) (*github.Hook, error) {
@@ -47,6 +47,8 @@ func GetHook(client *github.Client, owner, name, rawurl string) (*github.Hook, e
 	return nil, nil
 }
 
+// DeleteHook is a helper function that deletes a post-commit hook
+// for the specified repository.
 func DeleteHook(client *github.Client, owner, name, url string) error {
 	hook, err := GetHook(client, owner, name, url)
 	if err != nil {
@@ -59,7 +61,7 @@ func DeleteHook(client *github.Client, owner, name, url string) error {
 	return err
 }
 
-// CreateHook is a heper function that creates a post-commit hook
+// CreateHook is a helper function that creates a post-commit hook
 // for the specified repository.
 func CreateHook(client *github.Client, owner, name, url string) (*github.Hook, error) {
 	var hook = new(github.Hook)
@@ -72,7 +74,7 @@ func CreateHook(client *github.Client, owner, name, url string) (*github.Hook, e
 	return created, err
 }
 
-// GetFile is a heper function that retrieves a file from
+// GetFile is a helper function that retrieves a file from
 // GitHub and returns its contents in byte array format.
 func GetFile(client *github.Client, owner, name, path, ref string) ([]byte, error) {
 	var opts = new(github.RepositoryContentGetOptions)

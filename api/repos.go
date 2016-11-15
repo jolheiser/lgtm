@@ -3,13 +3,13 @@ package api
 import (
 	"fmt"
 
-	"github.com/lgtmco/lgtm/cache"
-	"github.com/lgtmco/lgtm/model"
-	"github.com/lgtmco/lgtm/remote"
-	"github.com/lgtmco/lgtm/router/middleware/session"
-	"github.com/lgtmco/lgtm/shared/httputil"
-	"github.com/lgtmco/lgtm/shared/token"
-	"github.com/lgtmco/lgtm/store"
+	"github.com/go-gitea/lgtm/cache"
+	"github.com/go-gitea/lgtm/model"
+	"github.com/go-gitea/lgtm/remote"
+	"github.com/go-gitea/lgtm/router/middleware/session"
+	"github.com/go-gitea/lgtm/shared/httputil"
+	"github.com/go-gitea/lgtm/shared/token"
+	"github.com/go-gitea/lgtm/store"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/gin-gonic/gin"
@@ -40,9 +40,9 @@ func GetRepos(c *gin.Context) {
 	// merges the slice of active and remote repositories favoring
 	// and swapping in local repository information when possible.
 	for i, repo := range repoc {
-		repo_, ok := repom[repo.Slug]
+		currRepo, ok := repom[repo.Slug]
 		if ok {
-			repoc[i] = repo_
+			repoc[i] = currRepo
 		}
 	}
 	c.JSON(200, repoc)

@@ -7,23 +7,33 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
+// SecretFunc is the definition of the required secret retrieval function.
 type SecretFunc func(*Token) (string, error)
 
 const (
+	// UserToken is the name of the user token.
 	UserToken = "user"
+
+	// SessToken is the name of the session token.
 	SessToken = "sess"
+
+	// HookToken is the name of the hook token.
 	HookToken = "hook"
+
+	// CsrfToken is the name of the CSRF token.
 	CsrfToken = "csrf"
 )
 
-// Default algorithm used to sign JWT tokens.
+// SignerAlgo defines the default algorithm used to sign JWT tokens.
 const SignerAlgo = "HS256"
 
+// Token represents our simple JWT.
 type Token struct {
 	Kind string
 	Text string
 }
 
+// Parse parses a raw JWT.
 func Parse(raw string, fn SecretFunc) (*Token, error) {
 	token := &Token{}
 	parsed, err := jwt.Parse(raw, keyFunc(token, fn))
@@ -35,6 +45,7 @@ func Parse(raw string, fn SecretFunc) (*Token, error) {
 	return token, nil
 }
 
+// ParseRequest parses a JWT from the request.
 func ParseRequest(r *http.Request, fn SecretFunc) (*Token, error) {
 	var token = r.Header.Get("Authorization")
 
@@ -62,6 +73,7 @@ func ParseRequest(r *http.Request, fn SecretFunc) (*Token, error) {
 	return Parse(cookie.Value, fn)
 }
 
+// CheckCsrf checks the validity of the JWT.
 func CheckCsrf(r *http.Request, fn SecretFunc) error {
 
 	// get and options requests are always
@@ -77,6 +89,7 @@ func CheckCsrf(r *http.Request, fn SecretFunc) error {
 	return err
 }
 
+// New initializes a new JWT.
 func New(kind, text string) *Token {
 	return &Token{Kind: kind, Text: text}
 }
@@ -87,7 +100,7 @@ func (t *Token) Sign(secret string) (string, error) {
 	return t.SignExpires(secret, 0)
 }
 
-// Sign signs the token using the given secret hash
+// SignExpires signs the token using the given secret hash
 // with an expiration date.
 func (t *Token) SignExpires(secret string, exp int64) (string, error) {
 	token := jwt.New(jwt.SigningMethodHS256)

@@ -9,10 +9,10 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/lgtmco/lgtm/model"
+	"github.com/go-gitea/lgtm/model"
 
-	cache "github.com/lgtmco/lgtm/cache/mock"
-	remote "github.com/lgtmco/lgtm/remote/mock"
+	cache "github.com/go-gitea/lgtm/cache/mock"
+	remote "github.com/go-gitea/lgtm/remote/mock"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/franela/goblin"

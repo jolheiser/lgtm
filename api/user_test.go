@@ -9,7 +9,7 @@ import (
 	"testing"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/lgtmco/lgtm/model"
+	"github.com/go-gitea/lgtm/model"
 
 	"github.com/franela/goblin"
 	"github.com/gin-gonic/gin"

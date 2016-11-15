@@ -1,5 +1,6 @@
 package model
 
+// Repo represents a repo from the the remote API.
 type Repo struct {
 	ID      int64  `json:"id,omitempty"       meddler:"repo_id,pk"`
 	UserID  int64  `json:"-"                  meddler:"repo_user_id"`
@@ -11,6 +12,7 @@ type Repo struct {
 	Secret  string `json:"-"                  meddler:"repo_secret"`
 }
 
+// Perm represents permissions from the the remote API.
 type Perm struct {
 	Pull  bool
 	Push  bool
