@@ -72,8 +72,8 @@ test-pgsql:
 	DATABASE_DRIVER="postgres" DATABASE_DATASOURCE="postgres://postgres@127.0.0.1:5432/postgres?sslmode=disable" go test -v -cover $(IMPORT)/store/datastore
 
 .PHONY: install
-install: $(BIN)/$(EXECUTABLE)
-	cp $< $(GOPATH)/bin/
+install: $(wildcard *.go)
+	go install -v -tags '$(TAGS)' -ldflags '-s -w $(LDFLAGS)'
 
 .PHONY: build
 build: $(BIN)/$(EXECUTABLE)
