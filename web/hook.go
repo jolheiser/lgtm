@@ -101,27 +101,34 @@ func Hook(c *gin.Context) {
 		idx = 2
 	}
 
-	var ns = make([]string, len(labels))
-	copy(ns, labels)
-
-	// remove old labels
-	err = remote.RemoveIssueLabels(c, user, repo, hook.Issue.Number, append(ns[:idx], ns[idx+1:]...))
-	if err != nil {
-		log.Errorf("Error remove old labels for %s pr %d. %s", repo.Slug, hook.Issue.Number, err)
-	}
-
 	oriLabels, err := remote.GetIssueLabels(c, user, repo, hook.Issue.Number)
 	if err != nil {
 		log.Errorf("Error retrieving labels for %s pr %d. %s", repo.Slug, hook.Issue.Number, err)
 	}
 
 	var hasLabel bool
-	for _, l := range oriLabels {
-		if l == labels[idx] {
+	var removeLabels []string
+	for _, label := range oriLabels {
+		if label == labels[idx] {
 			hasLabel = true
-			break
+		} else {
+			for _, l := range labels[:idx] {
+				if label == l {
+					removeLabels = append(removeLabels, label)
+					break
+				}
+			}
 		}
 	}
+
+	if len(removeLabels) > 0 {
+		// remove old labels
+		err = remote.RemoveIssueLabels(c, user, repo, hook.Issue.Number, removeLabels)
+		if err != nil {
+			log.Errorf("Error remove old labels for %s pr %d. %s", repo.Slug, hook.Issue.Number, err)
+		}
+	}
+
 	if !hasLabel {
 		// add new label
 		err = remote.AddIssueLabels(c, user, repo, hook.Issue.Number, []string{labels[idx]})
