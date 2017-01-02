@@ -16,7 +16,7 @@ including LGTM (looks good to me) in their approval text.
 ## Install
 
 You can download prebuilt binaries from the GitHub releases or from our
-[download site](http://dl.gitea.io.de/lgtm). You are a Mac user? Just take
+[download site](https://dl.gitea.io/lgtm). You are a Mac user? Just take
 a look at our [homebrew formula](https://github.com/go-gitea/homebrew-gitea).
 If you are missing an architecture just write us on our pretty active
 [Gitter](https://gitter.im/go-gitea/lgtm) chat. If you find a security issue
