@@ -9,7 +9,7 @@ SHA := $(shell git rev-parse --short HEAD)
 LDFLAGS += -X "github.com/go-gitea/lgtm/version.VersionDev=$(SHA)"
 
 TARGETS ?= linux darwin windows
-# ARCHS ?= amd64 386
+ARCHS ?= amd64 386
 PACKAGES ?= $(shell go list ./... | grep -v /vendor/)
 
 ifneq ($(shell uname), Darwin)
