@@ -45,16 +45,20 @@ pipeline:
       event: [ push, pull_request ]
 
   updater:
-    image: appleboy/golang-testing:1.9.2
+    image: webhippie/golang:edge
     pull: true
+    environment:
+      GOPATH: /srv/app
     commands:
       - make release
     when:
       event: [ tag ]
 
   updater:
-    image: appleboy/golang-testing:1.9.2
+    image: webhippie/golang:edge
     pull: true
+    environment:
+      GOPATH: /srv/app
     commands:
       - make release
     when:
