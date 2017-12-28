@@ -45,7 +45,7 @@ pipeline:
       event: [ push, pull_request ]
 
   updater:
-    image: webhippie/golang:edge
+    image: appleboy/golang-testing:1.9.2
     pull: true
     environment:
       GOPATH: /srv/app
@@ -55,7 +55,7 @@ pipeline:
       event: [ tag ]
 
   updater:
-    image: webhippie/golang:edge
+    image: appleboy/golang-testing:1.9.2
     pull: true
     environment:
       GOPATH: /srv/app
