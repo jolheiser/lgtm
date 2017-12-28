@@ -45,13 +45,21 @@ pipeline:
       event: [ push, pull_request ]
 
   updater:
-    image: karalabe/xgo-latest:latest
+    image: appleboy/golang-testing:1.9.2
     pull: true
     commands:
-      - make publish
+      - make release
     when:
-      event: [ push, tag ]
-      branch: [ master, refs/tags/* ]
+      event: [ tag ]
+
+  updater:
+    image: appleboy/golang-testing:1.9.2
+    pull: true
+    commands:
+      - make release
+    when:
+      event: [ push ]
+      branch: [ master ]
 
   docker:
     image: plugins/docker:17.05

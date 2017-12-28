@@ -8,8 +8,15 @@ SHA := $(shell git rev-parse --short HEAD)
 
 LDFLAGS += -X "github.com/go-gitea/lgtm/version.VersionDev=$(SHA)"
 
-TARGETS ?= linux/*,darwin/*,windows/*
+TARGETS ?= linux darwin windows
+# ARCHS ?= amd64 386
 PACKAGES ?= $(shell go list ./... | grep -v /vendor/)
+
+ifneq ($(shell uname), Darwin)
+	EXTLDFLAGS = -extldflags "-static" $(null)
+else
+	EXTLDFLAGS =
+endif
 
 TAGS ?=
 
@@ -81,36 +88,19 @@ build: $(BIN)/$(EXECUTABLE)
 $(BIN)/$(EXECUTABLE): $(wildcard *.go)
 	go build -v -tags '$(TAGS)' -ldflags '-s -w $(LDFLAGS)' -o $@
 
-.PHONY: release
-release: release-build release-copy release-check
+release: release-dirs release-build release-copy release-check
 
-.PHONY: release-build
+release-dirs:
+	mkdir -p $(DIST)/binaries $(DIST)/release
+
 release-build:
-	@which xgo > /dev/null; if [ $$? -ne 0 ]; then \
-		go get -u github.com/karalabe/xgo; \
+	@hash gox > /dev/null 2>&1; if [ $$? -ne 0 ]; then \
+		$(GO) get -u github.com/mitchellh/gox; \
 	fi
-	xgo -dest $(BIN) -tags '$(TAGS)' -ldflags '-s -w $(LDFLAGS)' -targets '$(TARGETS)' -out $(EXECUTABLE)-$(VERSION) $(IMPORT)
+	gox -os="$(TARGETS)" -arch="$(ARCHS)" -tags="$(TAGS)" -ldflags="$(EXTLDFLAGS)-s -w $(LDFLAGS)" -output="$(DIST)/binaries/$(EXECUTABLE)-$(VERSION)-{{.OS}}-{{.Arch}}"
 
-.PHONY: release-copy
 release-copy:
-	mkdir -p $(DIST)/release
-	$(foreach file,$(wildcard $(BIN)/$(EXECUTABLE)-*),cp $(file) $(DIST)/release/$(notdir $(file));)
+	$(foreach file,$(wildcard $(DIST)/binaries/$(EXECUTABLE)-*),cp $(file) $(DIST)/release/$(notdir $(file));)
 
-.PHONY: release-check
 release-check:
 	cd $(DIST)/release; $(foreach file,$(wildcard $(DIST)/release/$(EXECUTABLE)-*),sha256sum $(notdir $(file)) > $(notdir $(file)).sha256;)
-
-.PHONY: latest
-latest: release-build latest-copy latest-check
-
-.PHONY: latest-copy
-latest-copy:
-	mkdir -p $(DIST)/latest
-	$(foreach file,$(wildcard $(BIN)/$(EXECUTABLE)-*),cp $(file) $(DIST)/latest/$(subst $(EXECUTABLE)-$(VERSION),$(EXECUTABLE)-latest,$(notdir $(file)));)
-
-.PHONY: latest-check
-latest-check:
-	cd $(DIST)/latest; $(foreach file,$(wildcard $(DIST)/latest/$(EXECUTABLE)-*),sha256sum $(notdir $(file)) > $(notdir $(file)).sha256;)
-
-.PHONY: publish
-publish: release latest
