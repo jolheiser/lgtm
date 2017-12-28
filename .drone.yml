@@ -79,6 +79,7 @@ pipeline:
   release:
     image: plugins/s3:1
     pull: true
+    group: release
     secrets: [ aws_access_key_id, aws_secret_access_key ]
     bucket: releases
     endpoint: https://storage.gitea.io
@@ -93,6 +94,7 @@ pipeline:
   release:
     image: plugins/s3:1
     pull: true
+    group: release
     secrets: [ aws_access_key_id, aws_secret_access_key ]
     bucket: releases
     endpoint: https://storage.gitea.io
@@ -106,6 +108,7 @@ pipeline:
   github:
     image: plugins/github-release:1
     pull: true
+    group: release
     secrets: [ github_token ]
     files:
       - dist/release/*

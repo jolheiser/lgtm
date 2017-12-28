@@ -1,11 +1,13 @@
 # LGTM
 
-[![Build Status](http://drone.gitea.io/api/badges/go-gitea/lgtm/status.svg)](http://drone.gitea.io/go-gitea/lgtm)
-[![Join the chat at https://gitter.im/go-gitea/lgtm](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/go-gitea/lgtm?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![](https://images.microbadger.com/badges/image/gitea/lgtm.svg)](http://microbadger.com/images/gitea/lgtm "Get your own image badge on microbadger.com")
-[![Coverage Status](https://coverage.gitea.io/badges/go-gitea/lgtm/coverage.svg)](https://coverage.gitea.io/go-gitea/lgtm)
-[![Go Report Card](https://goreportcard.com/badge/github.com/go-gitea/lgtm)](https://goreportcard.com/report/github.com/go-gitea/lgtm)
-[![GoDoc](https://godoc.org/github.com/go-gitea/lgtm?status.svg)](https://godoc.org/github.com/go-gitea/lgtm)
+[![Build Status](https://drone.gitea.io/api/badges/go-gitea/lgtm/status.svg)](https://drone.gitea.io/go-gitea/lgtm)
+[![Join the Discord chat at https://discord.gg/NsatcWJ](https://img.shields.io/discord/322538954119184384.svg)](https://discord.gg/NsatcWJ)
+[![Join the Matrix chat at https://matrix.to/#/#gitea:matrix.org](https://img.shields.io/badge/matrix-%23gitea%3Amatrix.org-7bc9a4.svg)](https://matrix.to/#/#gitea:matrix.org)
+[![](https://images.microbadger.com/badges/image/gitea/lgtm.svg)](https://microbadger.com/images/gitea/lgtm "Get your own image badge on microbadger.com")
+[![codecov](https://codecov.io/gh/go-gitea/lgtm/branch/master/graph/badge.svg)](https://codecov.io/gh/go-gitea/lgtm)
+[![Go Report Card](https://goreportcard.com/badge/code.gitea.io/gitea)](https://goreportcard.com/report/code.gitea.io/gitea)
+[![GoDoc](https://godoc.org/code.gitea.io/gitea?status.svg)](https://godoc.org/code.gitea.io/gitea)
+[![Release](https://github-release-version.herokuapp.com/github/go-gitea/lgtm/release.svg?style=flat)](https://github.com/go-gitea/lgtm/releases/latest)
 
 LGTM is a simple pull request approval system using GitHub protected branches
 and maintainers files or maintainers groups. Pull requests are locked and cannot
