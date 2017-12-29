@@ -20,8 +20,10 @@ including LGTM (looks good to me) in their approval text.
 You can download prebuilt binaries from the GitHub releases or from our
 [download site](https://dl.gitea.io/lgtm). You are a Mac user? Just take
 a look at our [homebrew formula](https://github.com/go-gitea/homebrew-gitea).
-If you are missing an architecture just write us on our pretty active
-[Gitter](https://gitter.im/go-gitea/lgtm) chat. If you find a security issue
+If you have questions that are not covered by the documentation, you can get 
+in contact with us on  our [Discord server](https://discord.gg/NsatcWJ), 
+[Matrix room](https://matrix.to/#/#gitea:matrix.org), 
+or [forum](https://discourse.gitea.io/)!. If you find a security issue
 please contact security@gitea.io first.
 
 ## Development
@@ -75,5 +77,5 @@ for the full license text.
 ## Copyright
 
 ```
-Copyright (c) 2016 The Gitea Authors <https://gitea.io>
+Copyright (c) 2018 The Gitea Authors <https://gitea.io>
 ```
