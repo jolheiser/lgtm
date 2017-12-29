@@ -5,6 +5,7 @@ EXECUTABLE := lgtm
 IMPORT := github.com/go-gitea/lgtm
 
 SHA := $(shell git rev-parse --short HEAD)
+SOURCES ?= $(shell find . -name "*.go" -type f)
 
 LDFLAGS += -X "github.com/go-gitea/lgtm/version.VersionDev=$(SHA)"
 
@@ -79,13 +80,13 @@ test-pgsql:
 	DATABASE_DRIVER="postgres" DATABASE_DATASOURCE="postgres://postgres@pgsql:5432/postgres?sslmode=disable" go test -v -cover $(IMPORT)/store/datastore
 
 .PHONY: install
-install: $(wildcard *.go)
+install: $(SOURCES)
 	go install -v -tags '$(TAGS)' -ldflags '-s -w $(LDFLAGS)'
 
 .PHONY: build
 build: $(BIN)/$(EXECUTABLE)
 
-$(BIN)/$(EXECUTABLE): $(wildcard *.go)
+$(BIN)/$(EXECUTABLE): $(SOURCES)
 	go build -v -tags '$(TAGS)' -ldflags '-s -w $(LDFLAGS)' -o $@
 
 release: release-dirs release-build release-copy release-check
