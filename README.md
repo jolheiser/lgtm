@@ -7,7 +7,7 @@
 [![codecov](https://codecov.io/gh/go-gitea/lgtm/branch/master/graph/badge.svg)](https://codecov.io/gh/go-gitea/lgtm)
 [![Go Report Card](https://goreportcard.com/badge/code.gitea.io/gitea)](https://goreportcard.com/report/code.gitea.io/gitea)
 [![GoDoc](https://godoc.org/code.gitea.io/gitea?status.svg)](https://godoc.org/code.gitea.io/gitea)
-[![Release](https://github-release-version.herokuapp.com/github/go-gitea/lgtm/release.svg?style=flat)](https://github.com/go-gitea/lgtm/releases/latest)
+[![GitHub release](https://img.shields.io/github/release/go-gitea/lgtm.svg)](https://github.com/go-gitea/lgtm)
 
 LGTM is a simple pull request approval system using GitHub protected branches
 and maintainers files or maintainers groups. Pull requests are locked and cannot
