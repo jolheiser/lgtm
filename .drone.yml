@@ -11,6 +11,7 @@ steps:
   pull: always
   image: golang:1.15-alpine
   commands:
+  - apk add --no-cache make
   - make clean
   - make vet
   #- make lint
@@ -32,6 +33,7 @@ steps:
   pull: always
   image: golang:1.15-alpine
   commands:
+  - apk add --no-cache make
   - make test-mysql
   settings:
     group: testing
@@ -44,6 +46,7 @@ steps:
   pull: always
   image: golang:1.15-alpine
   commands:
+  - apk add --no-cache make
   - make test-pgsql
   settings:
     group: testing
@@ -67,6 +70,7 @@ steps:
   pull: always
   image: golang:1.15-alpine
   commands:
+  - apk add --no-cache make
   - make clean build
   settings:
     group: release
@@ -97,40 +101,6 @@ steps:
     - master
     event:
     - push
-
-- name: release
-  pull: always
-  image: plugins/s3:1
-  settings:
-    bucket: releases
-    endpoint: https://storage.gitea.io
-    group: release
-    path_style: true
-    source: "dist/release/*"
-    strip_prefix: dist/release/
-    target: "/lgtm/${DRONE_TAG##v}"
-  environment:
-    AWS_ACCESS_KEY_ID:
-      from_secret: aws_access_key_id
-    AWS_SECRET_ACCESS_KEY:
-      from_secret: aws_secret_access_key
-  when:
-    event:
-    - tag
-
-- name: github
-  pull: always
-  image: plugins/github-release:1
-  settings:
-    files:
-    - "dist/release/*"
-    group: release
-  environment:
-    GITHUB_TOKEN:
-      from_secret: github_token
-  when:
-    event:
-    - tag
 
 - name: discord
   pull: default
