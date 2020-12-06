@@ -42,6 +42,7 @@ steps:
   when:
     event:
     - push
+    - pull_request
 
 - name: test-pgsql
   pull: always
@@ -53,6 +54,7 @@ steps:
   when:
     event:
     - push
+    - pull_request
 
 - name: coverage
   pull: default
@@ -155,12 +157,16 @@ services:
   when:
     event:
     - push
+    - pull_request
 
 - name: pgsql
   pull: default
   image: postgres:9.5
   environment:
     POSTGRES_DB: test
+    POSTGRES_PASSWORD: test
+    POSTGRES_HOST_AUTH_METHOD: trust
   when:
     event:
     - push
+    - pull_request
