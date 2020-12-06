@@ -7,10 +7,10 @@ import (
 	"strings"
 	"time"
 
-	log "github.com/Sirupsen/logrus"
 	"github.com/go-gitea/lgtm/model"
 	"github.com/go-gitea/lgtm/shared/httputil"
 	"github.com/google/go-github/github"
+	log "github.com/sirupsen/logrus"
 	"golang.org/x/net/context"
 	"golang.org/x/oauth2"
 )
