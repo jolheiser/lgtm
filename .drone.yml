@@ -71,7 +71,7 @@ steps:
   pull: always
   image: golang:1.15
   commands:
-  - make build
+  - make clean build
   settings:
     group: release
   environment:
@@ -84,7 +84,6 @@ steps:
     event:
     - push
     - tag
-    - pull_request
 
 - name: docker
   pull: always
