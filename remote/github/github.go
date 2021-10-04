@@ -100,15 +100,27 @@ func (g *Github) GetTeams(c context.Context, user *model.User) ([]*model.Team, e
 // GetMembers retrieves members from the API.
 func (g *Github) GetMembers(c context.Context, user *model.User, org string) ([]*model.Member, error) {
 	client := setupClient(g.API, user.Token)
-	teammates, _, err := client.Teams.ListTeamMembersBySlug(c, org, "maintainers", &github.TeamListTeamMembersOptions{})
-	if err != nil {
-		return nil, fmt.Errorf("Error fetching team members. %s", err)
-	}
 	var members []*model.Member
-	for _, teammate := range teammates {
-		members = append(members, &model.Member{
-			Login: *teammate.Login,
-		})
+	opts := &github.TeamListTeamMembersOptions{
+		ListOptions: github.ListOptions{
+			Page:    1,
+			PerPage: 100,
+		},
+	}
+	for {
+		teammates, _, err := client.Teams.ListTeamMembersBySlug(c, org, "maintainers", opts)
+		if err != nil {
+			return nil, fmt.Errorf("Error fetching team members. %s", err)
+		}
+		for _, teammate := range teammates {
+			members = append(members, &model.Member{
+				Login: teammate.GetLogin(),
+			})
+		}
+		if len(teammates) < 100 {
+			break
+		}
+		opts.ListOptions.Page++
 	}
 	return members, nil
 }

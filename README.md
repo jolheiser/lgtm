@@ -1,7 +1,7 @@
 # LGTM
 
 [![Build Status](https://drone.gitea.io/api/badges/go-gitea/lgtm/status.svg)](https://drone.gitea.io/go-gitea/lgtm)
-[![Join the Discord chat at https://discord.gg/NsatcWJ](https://img.shields.io/discord/322538954119184384.svg)](https://discord.gg/NsatcWJ)
+[![Join the Discord chat at https://discord.gg/gitea](https://img.shields.io/discord/322538954119184384.svg)](https://discord.gg/gitea)
 [![Join the Matrix chat at https://matrix.to/#/#gitea:matrix.org](https://img.shields.io/badge/matrix-%23gitea%3Amatrix.org-7bc9a4.svg)](https://matrix.to/#/#gitea:matrix.org)
 [![](https://images.microbadger.com/badges/image/gitea/lgtm.svg)](https://microbadger.com/images/gitea/lgtm "Get your own image badge on microbadger.com")
 [![codecov](https://codecov.io/gh/go-gitea/lgtm/branch/master/graph/badge.svg)](https://codecov.io/gh/go-gitea/lgtm)
@@ -21,7 +21,7 @@ You can download prebuilt binaries from the GitHub releases or from our
 [download site](https://dl.gitea.io/lgtm). You are a Mac user? Just take
 a look at our [homebrew formula](https://github.com/go-gitea/homebrew-gitea).
 If you have questions that are not covered by the documentation, you can get 
-in contact with us on  our [Discord server](https://discord.gg/NsatcWJ), 
+in contact with us on  our [Discord server](https://discord.gg/gitea), 
 [Matrix room](https://matrix.to/#/#gitea:matrix.org), 
 or [forum](https://discourse.gitea.io/)!. If you find a security issue
 please contact security@gitea.io first.
